@@ -78,8 +78,12 @@ async function getWordFromInput(input: string, config: Config) {
   }
 
   if (config.onlyRealWords) {
-    const realWordList = await getWordList(config.supabaseClient, combinations)
-    words.push(...realWordList)
+    try {
+      const realWordList = await getWordList(config.supabaseClient, combinations)
+      words.push(...realWordList)
+    } catch (e) {
+      console.error(e);
+    }
 
     // local find match with combinations <-> real words
     // combinations.map((word, index) => {
